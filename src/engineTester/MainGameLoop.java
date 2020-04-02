@@ -25,13 +25,13 @@ public class MainGameLoop {
 
 
 
-        RawModel model = OBJLoader.loadObjModel("dragon", loader);
-        TexturedModel bigDragon = new TexturedModel(model, new ModelTexture(loader.loadTexture("white")));
-        ModelTexture texture = bigDragon.getModelTexture();
+        RawModel model = OBJLoader.loadObjModel("tree", loader);
+        TexturedModel treeModel = new TexturedModel(model, new ModelTexture(loader.loadTexture("white")));
+        ModelTexture texture = treeModel.getModelTexture();
         texture.setShineDamper(10);
         texture.setReflectivity(1);
 
-        Entity entity = new Entity(bigDragon, new Vector3f(0,0,-25),0,0,0,1);
+        Entity entity = new Entity(treeModel, new Vector3f(0,0,-25),0,0,0,1);
 
 
         Light light = new Light(new Vector3f(3000,2000,3000), new Vector3f(1,1,1));
