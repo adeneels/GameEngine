@@ -5,6 +5,8 @@ import entities.Camera;
 import entities.Entity;
 import entities.Light;
 import models.TexturedModel;
+import objConverter.ModelData;
+import objConverter.OBJFileLoader;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
@@ -24,22 +26,18 @@ public class MainGameLoop {
         Loader loader = new Loader();
 
 
+        ModelData grassData = OBJFileLoader.loadOBJ("grassModel");
+        ModelData treeData = OBJFileLoader.loadOBJ("tree");
 
-
-
-        RawModel tree = OBJLoader.loadObjModel("tree", loader);
+        RawModel tree = loader.loadToVao(treeData.getVertices(), treeData.getTextureCoords(), treeData.getNormals(), treeData.getIndices());
         TexturedModel treeModel = new TexturedModel(tree, new ModelTexture(loader.loadTexture("tree")));
-        ModelTexture treeTexture = treeModel.getModelTexture();
-        treeTexture.setShineDamper(10);
-        treeTexture.setReflectivity(1);
+        treeModel.getModelTexture().setShineDamper(10);
+        treeModel.getModelTexture().setReflectivity(1);
 
-        RawModel grass = OBJLoader.loadObjModel("grassModel", loader);
+        RawModel grass = loader.loadToVao(grassData.getVertices(), grassData.getTextureCoords(), grassData.getNormals(), grassData.getIndices());
         TexturedModel grassModel = new TexturedModel(grass, new ModelTexture(loader.loadTexture("grassTexture")));
-        ModelTexture grassTexture = grassModel.getModelTexture();
-        grassTexture.setUseFakeLighting(true);
-        grassTexture.setShineDamper(10);
-        grassTexture.setReflectivity(0);
-        grassTexture.setHasTransparency(true);
+        grassModel.getModelTexture().setUseFakeLighting(true);
+        grassModel.getModelTexture().setHasTransparency(true);
 
         Light light = new Light(new Vector3f(3000,2000,3000), new Vector3f(1,1,1));
 
@@ -67,9 +65,6 @@ public class MainGameLoop {
                     random.nextFloat() * -100), 0, 0 ,0, 1));
 
         }
-
-
-
 
         MasterRenderer renderer = new MasterRenderer();
         while(!Display.isCloseRequested()) {

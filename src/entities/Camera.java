@@ -12,16 +12,16 @@ public class Camera {
     public Camera() {}
 
     public void move() {
-        if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
             position.z -= 0.6f;
         }
-        if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
             position.z += 0.6f;
         }
-        if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
             position.x += 0.6f;
         }
-        if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
             position.x -= 0.6f;
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_Q)) {
@@ -36,6 +36,10 @@ public class Camera {
         if (Keyboard.isKeyDown(Keyboard.KEY_R)) {
             this.yaw += 1;
         }
+        if (Keyboard.isKeyDown(Keyboard.KEY_C)) {
+            this.yaw = 90;
+        }
+
     }
 
     public Vector3f getPosition() {
