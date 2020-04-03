@@ -5,10 +5,10 @@ import entities.Light;
 import org.lwjgl.util.vector.Matrix4f;
 import toolbox.Maths;
 
-public class StaticShader extends ShaderProgram {
+public class TerrainShader extends ShaderProgram {
 
-    private static final String VERTEX_FILE = "src/shaders/vertexShader.txt";
-    private static final String FRAGMENT_FILE = "src/shaders/fragmentShader.txt";
+    private static final String VERTEX_FILE = "src/shaders/terrainVertexShader.txt";
+    private static final String FRAGMENT_FILE = "src/shaders/terrainFragmentShader.txt";
 
     private int location_transformationMatrix;
     private int location_projectionMatrix;
@@ -17,10 +17,8 @@ public class StaticShader extends ShaderProgram {
     private int location_lightColour;
     private int location_shineDamper;
     private int location_reflectivity;
-    private int location_useFakeLighting;
 
-
-    public StaticShader() {
+    public TerrainShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
     }
 
@@ -34,12 +32,6 @@ public class StaticShader extends ShaderProgram {
         location_lightColour = super.getUniformLocation("lightColour");
         location_shineDamper = super.getUniformLocation("shineDamper");
         location_reflectivity = super.getUniformLocation("reflectivity");
-        location_useFakeLighting = super.getUniformLocation("useFakeLighting");
-
-    }
-
-    public void loadFakeLightingVariable(boolean useFake) {
-        super.loadBoolean(location_useFakeLighting, useFake);
     }
 
     @Override
