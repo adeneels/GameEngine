@@ -61,8 +61,7 @@ public class MainGameLoop {
         Terrain terrain2 = new Terrain(-1, -1, loader, texturePack, blendMap);
 
 
-        Camera camera = new Camera(100, 10 ,-100);
-        camera.setYaw(180);
+
 
         List<Entity> entities = new ArrayList<Entity>();
         List<Terrain> terrains = new ArrayList<Terrain>();
@@ -72,7 +71,7 @@ public class MainGameLoop {
 
 
         Random random = new Random();
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 125; i++) {
             if (i % 2 == 0) {
                 entities.add(new Entity(treeModel, new Vector3f(random.nextFloat() * 800 - 400, 0,
                         random.nextFloat() * -100), 0, 0 ,0, 0.5f));
@@ -86,8 +85,12 @@ public class MainGameLoop {
         RawModel bunnyModel = loader.loadToVao(bunnyData.getVertices(), bunnyData.getTextureCoords(), bunnyData.getNormals(), bunnyData.getIndices());
         TexturedModel bunnyTexture = new TexturedModel(bunnyModel, new ModelTexture(loader.loadTexture("mud")));
 
-        Player player = new Player(bunnyTexture, new Vector3f(100, 0 , -50), 0 , 0 , 0, 1);
+        Player player = new Player(bunnyTexture, new Vector3f(100, 0 , 50), 0 , 0 , 0, 1);
 
+
+
+        Camera camera = new Camera(player);
+        camera.setYaw(180);
 
 
         MasterRenderer renderer = new MasterRenderer();
