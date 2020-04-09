@@ -14,6 +14,8 @@ import renderEngine.*;
 import models.RawModel;
 import terrains.Terrain;
 import textures.ModelTexture;
+import textures.TerrainTexture;
+import textures.TerrainTexturePack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +27,25 @@ public class MainGameLoop {
         DisplayManager.createDisplay();
         Loader loader = new Loader();
 
+        //Terrain textures
+
+        TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("grassy"));
+        TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("mud"));
+        TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("grassFlowers"));
+        TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("path"));
+
+        TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
+
+        TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
+
+
+        //
 
         ModelData grassData = OBJFileLoader.loadOBJ("grassModel");
-        ModelData treeData = OBJFileLoader.loadOBJ("tree");
+        ModelData treeData = OBJFileLoader.loadOBJ("lowPolyTree");
 
         RawModel tree = loader.loadToVao(treeData.getVertices(), treeData.getTextureCoords(), treeData.getNormals(), treeData.getIndices());
-        TexturedModel treeModel = new TexturedModel(tree, new ModelTexture(loader.loadTexture("tree")));
+        TexturedModel treeModel = new TexturedModel(tree, new ModelTexture(loader.loadTexture("lowPolyTree")));
         treeModel.getModelTexture().setShineDamper(10);
         treeModel.getModelTexture().setReflectivity(1);
 
@@ -41,10 +56,9 @@ public class MainGameLoop {
 
         Light light = new Light(new Vector3f(3000,2000,3000), new Vector3f(1,1,1));
 
-        Terrain terrain1 = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("grass")));
-        Terrain terrain2 = new Terrain(1, -1, loader, new ModelTexture(loader.loadTexture("grass")));
-        Terrain terrain3 = new Terrain(0, 0, loader, new ModelTexture(loader.loadTexture("grass")));
-        Terrain terrain4 = new Terrain(1, 0, loader, new ModelTexture(loader.loadTexture("grass")));
+        Terrain terrain1 = new Terrain(0, -1, loader, texturePack, blendMap);
+        Terrain terrain2 = new Terrain(-1, -1, loader, texturePack, blendMap);
+
 
         Camera camera = new Camera();
         camera.setYaw(180);
@@ -54,13 +68,14 @@ public class MainGameLoop {
 
         terrains.add(terrain1);
         terrains.add(terrain2);
-        terrains.add(terrain3);
-        terrains.add(terrain4);
+
 
         Random random = new Random();
         for (int i = 0; i < 500; i++) {
-            entities.add(new Entity(treeModel, new Vector3f(random.nextFloat() * 800 - 400, 0,
-                    random.nextFloat() * -100), 0, 0 ,0, 3));
+            if (i % 2 == 0) {
+                entities.add(new Entity(treeModel, new Vector3f(random.nextFloat() * 800 - 400, 0,
+                        random.nextFloat() * -100), 0, 0 ,0, 0.5f));
+            }
             entities.add(new Entity(grassModel, new Vector3f(random.nextFloat() * 800 - 400, 0,
                     random.nextFloat() * -100), 0, 0 ,0, 1));
 
