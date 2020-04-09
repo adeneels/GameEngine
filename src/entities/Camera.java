@@ -1,6 +1,7 @@
 package entities;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 public class Camera {
@@ -12,34 +13,11 @@ public class Camera {
     public Camera() {}
 
     public void move() {
-        if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
-            position.z -= 0.6f;
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
-            position.z += 0.6f;
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
-            position.x += 0.6f;
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
-            position.x -= 0.6f;
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_Q)) {
-            position.y += 0.1f;
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
-            position.y -= 0.1f;
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_E)) {
-            this.yaw -= 1;
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_R)) {
-            this.yaw += 1;
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_C)) {
-            this.yaw = 90;
-        }
+        //moved to player
+    }
 
+    public Camera(float x, float y, float z) {
+        this.position = new Vector3f(x, y, z);
     }
 
     public Vector3f getPosition() {
